@@ -1,0 +1,4 @@
+﻿[大侧]+(门口|门)
+[出入]+口
+[0-9零一二两仨三四五六七八九十ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]+(号楼|号门|楼|单元|栋|层|座|室|排|区|门|厅|段|期|铺|户|舍|坊|库|巷|通道)
+(通道|甲|乙|丙|丁)[0-9零一二两仨三四五六七八九十ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]

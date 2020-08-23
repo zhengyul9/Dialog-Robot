@@ -1,0 +1,192 @@
+@prefix : <http://www.example.com/test#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix example: <http://www.example.com/test#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix standard: <http://hual.ai/standard#> .
+@prefix special: <http://hual.ai/special#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.example.com/test> .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://hual.ai/special#bnlabel
+special:bnlabel rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://hual.ai/standard#ConditionProperty
+standard:ConditionProperty rdf:type owl:ObjectProperty .
+
+
+###  http://hual.ai/standard#DiffusionProperty
+standard:DiffusionProperty rdf:type owl:ObjectProperty .
+
+
+###  http://hual.ai/standard#Undercondition
+standard:Undercondition rdf:type owl:ObjectProperty .
+
+
+###  http://hual.ai/standard#YshapeProperty
+standard:YshapeProperty rdf:type owl:ObjectProperty .
+
+
+###  http://www.example.com/test#条件属性1
+example:条件属性1 rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf standard:ConditionProperty ;
+          rdfs:domain example:实体类1 ;
+          rdfs:range example:条件BN类1 .
+
+
+###  http://www.example.com/test#在条件下1
+example:在条件下1 rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf standard:Undercondition ;
+                      rdfs:domain standard:BNclass ;
+                      rdfs:range standard:Conditionclass .
+
+
+###  http://www.example.com/test#Y属性1
+example:Y属性1 rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf standard:YshapeProperty ;
+            rdfs:domain example:实体类1 ;
+            rdfs:range example:YBN类1 .
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://hual.ai/standard#HualDataTypeProperty
+standard:HualDataTypeProperty rdf:type owl:DatatypeProperty .
+
+
+###  http://www.example.com/test#数值属性1
+example:数值属性1 rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf standard:HualDataTypeProperty ;
+         rdfs:domain standard:BNclass ,
+                     example:实体类1 ;
+         rdfs:range xsd:string ;
+         rdfs:label "数值属性1" .
+
+
+###  http://www.example.com/test#数值属性2
+example:数值属性2 rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf standard:HualDataTypeProperty ;
+         rdfs:domain example:实体类1 ;
+         rdfs:range xsd:string ;
+         rdfs:label "数值属性2" .
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://hual.ai/standard#BNclass
+standard:BNclass rdf:type owl:Class ;
+             rdfs:subClassOf owl:Thing .
+
+
+###  http://hual.ai/standard#Conditionclass
+standard:Conditionclass rdf:type owl:Class ;
+                    rdfs:subClassOf owl:Thing .
+
+
+###  http://www.example.com/test#条件BN类1
+example:条件BN类1 rdf:type owl:Class ;
+                          rdfs:subClassOf standard:BNclass ;
+                          rdfs:label "条件BN类1" .
+
+
+###  http://www.example.com/test#YBN类1
+example:YBN类1 rdf:type owl:Class ;
+                  rdfs:subClassOf standard:BNclass ;
+                  rdfs:label "YBN类1" .
+
+
+###  http://www.example.com/test#YBN子类1
+example:YBN子类1 rdf:type owl:Class ;
+                rdfs:subClassOf example:YBN类1 ;
+                rdfs:label "YBN子类1" .
+
+###  http://www.example.com/test#条件BN子类1
+example:条件BN子类1 rdf:type owl:Class ;
+              rdfs:subClassOf example:条件BN类1 ;
+              rdfs:label "条件BN子类1" .
+
+###  http://www.example.com/test#实体类
+example:实体类1 rdf:type owl:Class ;
+           rdfs:subClassOf owl:Thing ;
+           rdfs:label "实体类1" .
+
+
+###  http://www.example.com/test#条件实体类1
+example:条件实体类1 rdf:type owl:Class ;
+         rdfs:subClassOf standard:Conditionclass ;
+         rdfs:label "条件实体类1" .
+
+
+###  http://www.example.com/test#实体子类1
+example:实体子类1 rdf:type owl:Class ;
+       rdfs:subClassOf example:实体类 ;
+       rdfs:label "实体子类1" .
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.example.com/test#实体1
+example:实体1 rdf:type owl:NamedIndividual ,
+                example:实体类1 ;
+       example:Y属性1 example:YBN1 ;
+       example:数值属性2 "#实体1数值属性2#" ;
+       rdfs:label "实体1" .
+
+###  http://www.example.com/test#实体2
+example:实体2 rdf:type owl:NamedIndividual ,
+                example:实体类1 ;
+       example:Y属性1 example:YBN1 ;
+       example:数值属性2 "#实体2数值属性2#" ;
+       rdfs:label "实体2" .
+
+###  http://www.example.com/test#YBN1
+example:YBN1 rdf:type owl:NamedIndividual ,
+                     example:YBN类1 ;
+            example:数值属性1 "#YBN1数值属性1#" ;
+            special:bnlabel "YBN1" .
+
+
+###  http://www.example.com/test#条件实体1
+example:条件实体1 rdf:type owl:NamedIndividual ,
+                            example:条件实体类1 ;
+                   rdfs:label "条件实体1" .
+
+
+###  http://www.example.com/test#条件实体2
+example:条件实体2 rdf:type owl:NamedIndividual ,
+                            example:条件实体类1 ;
+                   rdfs:label "条件实体2" .
+
+###  http://www.example.com/test#条件BN1
+example:条件BN1 rdf:type owl:NamedIndividual ,
+                     example:条件BN子类1 ;
+            example:在条件下1 example:条件实体1 ;
+            example:数值属性1 "#条件BN1数值属性1#" ;
+            special:bnlabel "条件BN1" .
+
+###  http://www.example.com/test#条件BN2
+example:条件BN2 rdf:type owl:NamedIndividual ,
+                     example:条件BN子类1 ;
+            example:在条件下1 example:条件实体2 ;
+            example:数值属性1 "#条件BN2数值属性1#" ;
+            special:bnlabel "条件BN2" .
+
+###  http://www.example.com/test#实体3
+example:实体3 rdf:type owl:NamedIndividual ,
+                example:实体类1 ;
+       example:条件属性1 example:条件BN1 ;
+       example:条件属性1 example:条件BN2 ;
+       rdfs:label "实体3" .

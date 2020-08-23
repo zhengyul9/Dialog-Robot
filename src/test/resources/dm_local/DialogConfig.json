@@ -1,0 +1,590 @@
+{
+  "slots": [
+    {
+      "name": "日期",
+      "type": "ai.hual.labrador.utils.DateUtils$Date",
+      "updateStrategy": "ai.hual.labrador.dm.slotUpdateStrategies.OverwriteStrategy",
+      "params": []
+    },
+    {
+      "name": "时刻",
+      "type": "ai.hual.labrador.utils.TimeUtils$Time",
+      "updateStrategy": "ai.hual.labrador.dm.slotUpdateStrategies.OverwriteStrategy",
+      "params": []
+    },
+    {
+      "name": "人数",
+      "updateStrategy": "dm.slotUpdateStrategy.PeopleCountStrategy",
+      "params": [
+        {
+          "key": "max",
+          "value": 5
+        }
+      ]
+    },
+    {
+      "name": "乘客类别",
+      "updateStrategy": "ai.hual.labrador.dm.slotUpdateStrategies.OverwriteStrategy",
+      "params": []
+    },
+    {
+      "name": "订票日期查询结果",
+      "params": []
+    },
+    {
+      "name": "订票价格查询结果",
+      "params": []
+    }
+  ],
+  "states": [
+    {
+      "name": "订票",
+      "subStates": [
+        {
+          "name": "问日期",
+          "transitions": [
+            {
+              "to": "问价格",
+              "conditions": [
+                {
+                  "condition": "ai.hual.labrador.dm.conditions.IntentCondition",
+                  "params": [
+                    {
+                      "key": "eq",
+                      "value": "问价格"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "executions": [
+            {
+              "execution": "ai.hual.labrador.dm.executions.CallAPIExecution",
+              "params": [
+                {
+                  "key": "url",
+                  "value": "www.ticket.com/date"
+                },
+                {
+                  "key": "method",
+                  "value": "POST"
+                },
+                {
+                  "key": "body",
+                  "value": "{ \"type\": \"train\" }"
+                },
+                {
+                  "key": "responseSlot",
+                  "value": "订票日期查询结果"
+                }
+              ]
+            },
+            {
+              "execution": "ai.hual.labrador.dm.executions.ResponseExecution",
+              "params": [
+                {
+                  "key": "intent",
+                  "value": "askDate"
+                },
+                {
+                  "key": "availableDate",
+                  "value": "订票日期查询结果"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "问价格",
+          "transitions": [
+            {
+              "to": "问日期",
+              "conditions": [
+                {
+                  "condition": "ai.hual.labrador.dm.conditions.IntentCondition",
+                  "params": [
+                    {
+                      "key": "eq",
+                      "value": "问日期"
+                    }
+                  ]
+                },
+                {
+                  "condition": "ai.hual.labrador.dm.conditions.CompareCondition",
+                  "params": [
+                    {
+                      "key": "type",
+                      "value": "日期"
+                    },
+                    {
+                      "key": "operator",
+                      "value": ">"
+                    },
+                    {
+                      "key": "left",
+                      "value": "{{日期}}"
+                    },
+                    {
+                      "key": "right",
+                      "value": "{{sys.today}}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "executions": [
+            {
+              "execution": "ai.hual.labrador.dm.executions.CallAPIExecution",
+              "params": [
+                {
+                  "key": "url",
+                  "value": "www.ticket.com/price"
+                },
+                {
+                  "key": "method",
+                  "value": "POST"
+                },
+                {
+                  "key": "body",
+                  "value": "{ \"type\": \"train\" }"
+                },
+                {
+                  "key": "responseSlot",
+                  "value": "订票价格查询结果"
+                }
+              ]
+            },
+            {
+              "execution": "ai.hual.labrador.dm.executions.ResponseExecution",
+              "params": [
+                {
+                  "key": "intent",
+                  "value": "askPrice"
+                },
+                {
+                  "key": "availablePrice",
+                  "value": "订票价格查询结果"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "transitions": [
+        {
+          "to": "退票",
+          "conditions": [
+            {
+              "condition": "ai.hual.labrador.dm.conditions.IntentCondition",
+              "params": [
+                {
+                  "key": "eq",
+                  "value": "退票"
+                }
+              ]
+            },
+            {
+              "condition": "ai.hual.labrador.dm.conditions.CompareCondition",
+              "params": [
+                {
+                  "key": "type",
+                  "value": "日期"
+                },
+                {
+                  "key": "operator",
+                  "value": ">"
+                },
+                {
+                  "key": "left",
+                  "value": "{{日期}}"
+                },
+                {
+                  "key": "right",
+                  "value": "{{sys.today}}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "to": "退票",
+          "conditions": [
+            {
+              "condition": "ai.hual.labrador.dm.conditions.IntentCondition",
+              "params": [
+                {
+                  "key": "eq",
+                  "value": "换票"
+                }
+              ]
+            },
+            {
+              "condition": "ai.hual.labrador.dm.conditions.CompareCondition",
+              "params": [
+                {
+                  "key": "type",
+                  "value": "日期"
+                },
+                {
+                  "key": "operator",
+                  "value": ">"
+                },
+                {
+                  "key": "left",
+                  "value": "{{日期}}"
+                },
+                {
+                  "key": "right",
+                  "value": "{{sys.today}}"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "initState": "问日期"
+    },
+    {
+      "name": "退票",
+      "subStates": [
+        {
+          "name": "问日期",
+          "transitions": [
+            {
+              "to": "问价格",
+              "conditions": [
+                {
+                  "condition": "ai.hual.labrador.dm.conditions.IntentCondition",
+                  "params": [
+                    {
+                      "key": "eq",
+                      "value": "问价格"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "executions": [
+            {
+              "execution": "ai.hual.labrador.dm.executions.CallAPIExecution",
+              "params": [
+                {
+                  "key": "url",
+                  "value": "www.ticket.com/date"
+                },
+                {
+                  "key": "method",
+                  "value": "POST"
+                },
+                {
+                  "key": "body",
+                  "value": "{ \"type\": \"train\" }"
+                },
+                {
+                  "key": "responseSlot",
+                  "value": "订票日期查询结果"
+                }
+              ]
+            },
+            {
+              "execution": "ai.hual.labrador.dm.executions.ResponseExecution",
+              "params": [
+                {
+                  "key": "intent",
+                  "value": "askDate"
+                },
+                {
+                  "key": "availableDate",
+                  "value": "订票日期查询结果"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "问价格",
+          "transitions": [
+            {
+              "to": "问日期",
+              "conditions": [
+                {
+                  "condition": "ai.hual.labrador.dm.conditions.IntentCondition",
+                  "params": [
+                    {
+                      "key": "eq",
+                      "value": "问日期"
+                    }
+                  ]
+                },
+                {
+                  "condition": "ai.hual.labrador.dm.conditions.CompareCondition",
+                  "params": [
+                    {
+                      "key": "type",
+                      "value": "日期"
+                    },
+                    {
+                      "key": "operator",
+                      "value": ">"
+                    },
+                    {
+                      "key": "left",
+                      "value": "{{日期}}"
+                    },
+                    {
+                      "key": "right",
+                      "value": "{{sys.today}}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "executions": [
+            {
+              "execution": "ai.hual.labrador.dm.executions.CallAPIExecution",
+              "params": [
+                {
+                  "key": "url",
+                  "value": "www.ticket.com/price"
+                },
+                {
+                  "key": "method",
+                  "value": "POST"
+                },
+                {
+                  "key": "body",
+                  "value": "{ \"type\": \"train\" }"
+                },
+                {
+                  "key": "responseSlot",
+                  "value": "订票价格查询结果"
+                }
+              ]
+            },
+            {
+              "execution": "ai.hual.labrador.dm.executions.ResponseExecution",
+              "params": [
+                {
+                  "key": "intent",
+                  "value": "askPrice"
+                },
+                {
+                  "key": "availablePrice",
+                  "value": "订票价格查询结果"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "transitions": [
+        {
+          "to": "订票",
+          "conditions": [
+            {
+              "condition": "ai.hual.labrador.dm.conditions.IntentCondition",
+              "params": [
+                {
+                  "key": "eq",
+                  "value": "订票"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "initState": "问日期"
+    },
+    {
+      "name": "咨询",
+      "subStates": [
+        {
+          "name": "问日期",
+          "transitions": [
+            {
+              "to": "问价格",
+              "conditions": [
+                {
+                  "condition": "ai.hual.labrador.dm.conditions.IntentCondition",
+                  "params": [
+                    {
+                      "key": "eq",
+                      "value": "问价格"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "executions": [
+            {
+              "execution": "ai.hual.labrador.dm.executions.CallAPIExecution",
+              "params": [
+                {
+                  "key": "url",
+                  "value": "www.ticket.com/date"
+                },
+                {
+                  "key": "method",
+                  "value": "POST"
+                },
+                {
+                  "key": "body",
+                  "value": "{ \"type\": \"train\" }"
+                },
+                {
+                  "key": "responseSlot",
+                  "value": "订票日期查询结果"
+                }
+              ]
+            },
+            {
+              "execution": "ai.hual.labrador.dm.executions.ResponseExecution",
+              "params": [
+                {
+                  "key": "intent",
+                  "value": "askDate"
+                },
+                {
+                  "key": "availableDate",
+                  "value": "订票日期查询结果"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "问价格",
+          "transitions": [
+            {
+              "to": "问日期",
+              "conditions": [
+                {
+                  "condition": "ai.hual.labrador.dm.conditions.IntentCondition",
+                  "params": [
+                    {
+                      "key": "eq",
+                      "value": "问日期"
+                    }
+                  ]
+                },
+                {
+                  "condition": "ai.hual.labrador.dm.conditions.CompareCondition",
+                  "params": [
+                    {
+                      "key": "type",
+                      "value": "日期"
+                    },
+                    {
+                      "key": "operator",
+                      "value": ">"
+                    },
+                    {
+                      "key": "left",
+                      "value": "{{日期}}"
+                    },
+                    {
+                      "key": "right",
+                      "value": "{{sys.today}}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "executions": [
+            {
+              "execution": "ai.hual.labrador.dm.executions.CallAPIExecution",
+              "params": [
+                {
+                  "key": "url",
+                  "value": "www.ticket.com/price"
+                },
+                {
+                  "key": "method",
+                  "value": "POST"
+                },
+                {
+                  "key": "body",
+                  "value": "{ \"type\": \"train\" }"
+                },
+                {
+                  "key": "responseSlot",
+                  "value": "订票价格查询结果"
+                }
+              ]
+            },
+            {
+              "execution": "ai.hual.labrador.dm.executions.ResponseExecution",
+              "params": [
+                {
+                  "key": "intent",
+                  "value": "askPrice"
+                },
+                {
+                  "key": "availablePrice",
+                  "value": "订票价格查询结果"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "transitions": [
+        {
+          "to": "订票",
+          "conditions": [
+            {
+              "condition": "ai.hual.labrador.dm.conditions.IntentCondition",
+              "params": [
+                {
+                  "key": "eq",
+                  "value": "订票"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "to": "退票",
+          "conditions": [
+            {
+              "condition": "ai.hual.labrador.dm.conditions.IntentCondition",
+              "params": [
+                {
+                  "key": "eq",
+                  "value": "退票"
+                }
+              ]
+            }
+          ],
+          "executions": [
+            {
+              "execution": "ai.hual.labrador.dm.executions.SetSlotValueExecution",
+              "params": [
+                {
+                  "key": "slot",
+                  "value": "a"
+                },
+                {
+                  "key": "value",
+                  "value": "Executed"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "initState": "问日期"
+    }
+  ],
+  "initState": "咨询",
+  "unknownExecution": {
+    "execution": "ai.hual.labrador.dm.executions.DefaultUnknownExecution",
+    "params": []
+  }
+}

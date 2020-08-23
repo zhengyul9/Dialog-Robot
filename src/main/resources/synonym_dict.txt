@@ -1,0 +1,4 @@
+synonym	如何	怎样,怎么
+synonym	做什么	干嘛,干什么,干啥,做啥
+synonym	为什么	为嘛,为啥,为何
+synonym	可不可以	能不能,能否,可否

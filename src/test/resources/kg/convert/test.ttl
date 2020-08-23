@@ -1,0 +1,30 @@
+# baseURI: http://hual.ai/test
+# prefix: test
+
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix test: <http://hual.ai/test#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://hual.ai/test>
+  rdf:type owl:Ontology ;
+  owl:versionInfo "Created with TopBraid Composer";
+.
+test:产品简介
+  rdf:type owl:DatatypeProperty ;
+  rdfs:domain test:人寿保险 ;
+  rdfs:label "产品简介";
+  rdfs:range xsd:string ;
+.
+test:人寿保险
+  rdf:type owl:Class ;
+  rdfs:label "人寿保险";
+  rdfs:subClassOf owl:Thing ;
+.
+test:别名
+  rdf:type owl:DatatypeProperty ;
+  rdfs:domain test:人寿保险 ;
+  rdfs:label "别名";
+  rdfs:range xsd:string ;
+.

@@ -1,0 +1,38 @@
+{
+  "currentState": "咨询",
+  "subStates": {
+    "咨询": {
+      "currentState": "问日期",
+      "subStates": {
+        "问日期": {
+          "currentState": "问日期"
+        },
+        "问价格": {
+          "currentState": "问价格"
+        }
+      }
+    },
+    "订票": {
+      "currentState": "问日期",
+      "subStates": {
+        "问日期": {
+          "currentState": "问日期"
+        },
+        "问价格": {
+          "currentState": "问价格"
+        }
+      }
+    },
+    "退票": {
+      "currentState": "问日期",
+      "subStates": {
+        "问日期": {
+          "currentState": "问日期"
+        },
+        "问价格": {
+          "currentState": "问价格"
+        }
+      }
+    }
+  }
+}

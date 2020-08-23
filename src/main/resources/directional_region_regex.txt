@@ -1,0 +1,13 @@
+从{{省}} 起始地=from(region)
+{{省}}(?:出发|起) 起始地=from(region)
+从{{市}} 起始地=from(region)
+从{{市}}(?:出发|起) 起始地=from(region)
+从{{县}} 起始地=from(region)
+从{{县}}(?:出发|起) 起始地=from(region)
+从{{区}} 起始地=from(region)
+从{{区}}(?:出发|起) 起始地=from(region)
+[到至去]{{省}} 到达地=to(region)
+[到至去]{{市}} 到达地=to(region)
+[到至去]{{县}} 到达地=to(region)
+[到至去]{{区}} 到达地=to(region)
+

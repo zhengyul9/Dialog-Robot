@@ -1,0 +1,50 @@
+{
+  "slots": {
+    "意图": "",
+    "日期": "",
+    "时刻": "",
+    "人数": "",
+    "乘客类别": "",
+    "订票日期查询结果": "",
+    "订票价格查询结果": ""
+  },
+  "types": {},
+  "currentState": {
+    "currentState": "咨询",
+    "subStates": {
+      "咨询": {
+        "currentState": "问日期",
+        "subStates": {
+          "问日期": {
+            "currentState": null
+          },
+          "问价格": {
+            "currentState": null
+          }
+        }
+      },
+      "订票": {
+        "currentState": "问日期",
+        "subStates": {
+          "问日期": {
+            "currentState": null
+          },
+          "问价格": {
+            "currentState": null
+          }
+        }
+      },
+      "退票": {
+        "currentState": "问日期",
+        "subStates": {
+          "问日期": {
+            "currentState": null
+          },
+          "问价格": {
+            "currentState": null
+          }
+        }
+      }
+    }
+  }
+}

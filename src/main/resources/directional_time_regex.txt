@@ -1,0 +1,8 @@
+{{时刻}}[之以]?后 时刻起始=startTime(time)
+{{时刻}}[之以]?前 时刻结束=endTime(time)
+(从{{时刻}}(?:起始?|开始)?|从?{{时刻}}(?:起始?|开始)) 时刻起始=startTime(time)
+(到{{时刻}}(?:为?止|结束)?|到?{{时刻}}(?:为?止|结束)) 时刻结束=endTime(time)
+(?:之?前|上面?){{时刻段}} 确定时刻段=prevTimeDuration(time_duration)
+(?:之?后|下面?|接下来){{时刻段}} 确定时刻段=nextTimeDuration(time_duration)
+{{时刻}}[之以]?前的?{{时刻段}} 确定时刻段=prevTimeDuration(time,time_duration)
+{{时刻}}[之以]?后的?{{时刻段}} 确定时刻段=nextTimeDuration(time,time_duration)

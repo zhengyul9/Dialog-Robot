@@ -1,0 +1,31 @@
+[
+  {
+    "slot_name": "x",
+    "template_intent": "问x",
+    "template_params": []
+  },
+  {
+    "slot_name": "y",
+    "template_intent": "问y",
+    "template_params": [
+      {
+        "key": "x",
+        "value": "{{x}}"
+      }
+    ]
+  },
+  {
+    "slot_name": "z",
+    "template_intent": "问z",
+    "template_params": [
+      {
+        "key": "x",
+        "value": "{{x}}"
+      },
+      {
+        "key": "y",
+        "value": "{{y}}"
+      }
+    ]
+  }
+]
